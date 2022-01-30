@@ -118,11 +118,17 @@ let engine=Matter.Engine.create();
             for(let elt1 of engine.world.bodies){
                 elt1.render.fillStyle="pink";}
 //random green
-            /*let randomArray=[35,23,152,101,22];
+            let randomArray=[35,23,152,101,22];
             for(let elt2 of randomArray){
                 engine.world.bodies[elt2].render.fillStyle="green";
-            }*/
-
+            }
+function checkStaticAllowed(idIndex){
+    if(idIndex==2) return false;
+    else if((idIndex+2) in randomArray) return false;
+    
+    return true;
+    
+}
 
 //make object disappear
             let mouseClickNumber=0;
@@ -134,10 +140,15 @@ let engine=Matter.Engine.create();
                              Matter.Body.setStatic(elt1,false);
                          }*/
                          for(let elt3 of engine.world.bodies){
-                             if(elt3.id!=2 && elt3.render.fillStyle!="green") Matter.Body.setStatic(elt3,false);
-                             else{console.log(elt3)}
+                             if(checkStaticAllowed(elt3.id) ) Matter.Body.setStatic(elt3,false);
+                        
+                             //else{console.log(elt3)};
                              }
-                    }
+                        for(let elt6 of randomArray){
+                            Matter.Body.setStatic(engine.world.bodies[elt6],true);
+                            }
+
+                        }
 
                      if(Matter.Bounds.contains(elt4.bounds,event.mouse.position)&& elt4.id!=2 && elt4.render.fillStyle!="green"){ 
                          Matter.Composite.remove(engine.world,elt4);
