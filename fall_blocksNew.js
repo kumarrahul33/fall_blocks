@@ -1,7 +1,8 @@
 let engine=Matter.Engine.create();
+let scoreDisplay=document.getElementById("jjssh");
         
 
-            let render= Matter.Render.create({
+            var render= Matter.Render.create({
                 element:document.body,
                 engine: engine,
                 options:{
@@ -64,52 +65,52 @@ let engine=Matter.Engine.create();
 
             let game_tiles2=[];
             for(let ptr1=0; ptr1<18; ptr1++){
-                game_tiles2[ptr1]=new blocks(ptr1*75+87.5,600,75,10,700,0.9,0.9);
+                game_tiles2[ptr1]=new blocks(ptr1*75+87.5,600,75,10,700,0.5,0.5);
                 game_tiles2[ptr1].makeBody();
             }
             let game_tiles3=[];
             for(let ptr=2;ptr<53;ptr++){
-                game_tiles3[ptr]=new blocks(ptr*25+70,580,15,50,600,0.9,0.9);
+                game_tiles3[ptr]=new blocks(ptr*25+70,580,15,50,600,0.2,0.2);
                 game_tiles3[ptr].makeBody();
             }
             let game_tiles4=[];
             for(let ptr=1;ptr<16;ptr++){
-                game_tiles4[ptr]=new blocks(ptr*85+65,545,85,10,500,0.9,0.9);
+                game_tiles4[ptr]=new blocks(ptr*85+65,545,85,10,500,0.2,0.2);
                 game_tiles4[ptr].makeBody();
             }
             let game_tiles5=[];
             for(let ptr=3;ptr<51;ptr++){
-                game_tiles5[ptr]=new blocks(ptr*25+65,515,15,50,400,0.9,0.9);
+                game_tiles5[ptr]=new blocks(ptr*25+65,515,15,50,400,0.2,0.2);
                 game_tiles5[ptr].makeBody();
             }
             let game_tiles6=[];
             for(let ptr=2;ptr<16;ptr++){
-                game_tiles6[ptr]=new blocks(ptr*85+15,480,85,10,250,0.9,0.9);
+                game_tiles6[ptr]=new blocks(ptr*85+15,480,85,10,250,0.2,0.2);
                 game_tiles6[ptr].makeBody();
             }
             let game_tiles7=[];
             for(let ptr=5;ptr<50;ptr++){
-                game_tiles7[ptr]=new blocks(ptr*25+70,455,12,50,200,0.9,0.9);
+                game_tiles7[ptr]=new blocks(ptr*25+70,455,12,50,200,0.2,0.2);
                 game_tiles7[ptr].makeBody();
             }
             let game_tiles8=[];
             for(let ptr=2;ptr<16;ptr++){
-                game_tiles8[ptr]=new blocks(ptr*80+65,430,80,12,100,0.9,0.9);
+                game_tiles8[ptr]=new blocks(ptr*80+65,430,80,12,100,0.2,0.2);
                 game_tiles8[ptr].makeBody();
             }
             let game_tiles9=[];
             for(let ptr=7;ptr<48;ptr++){
-                game_tiles9[ptr]=new blocks(ptr*25+70,410,15,40,80,0.9,0.9);
+                game_tiles9[ptr]=new blocks(ptr*25+70,410,15,40,80,0.2,0.2);
                 game_tiles9[ptr].makeBody();
             }
             let game_tiles10=[];
             for(let ptr=3;ptr<15;ptr++){
-                game_tiles10[ptr]=new blocks(ptr*80+65,390,80,12,50,0.9,0.9);
+                game_tiles10[ptr]=new blocks(ptr*80+65,390,80,12,50,0.2,0.2);
                 game_tiles10[ptr].makeBody();
             }
             let game_tiles11=[];
             for(let ptr=10;ptr<46;ptr++){
-                game_tiles11[ptr]=new blocks(ptr*25+70,370,15,40,25,0.9,0.9);
+                game_tiles11[ptr]=new blocks(ptr*25+70,370,15,40,25,0.2,0.2);
                 game_tiles11[ptr].makeBody();
             } 
             Matter.Runner.run(engine);
@@ -122,19 +123,34 @@ let engine=Matter.Engine.create();
             for(let elt2 of randomArray){
                 engine.world.bodies[elt2].render.fillStyle="green";
             }
+
+function indexToid(arr1){
+            let arr2=[];
+            for(let index1 of arr1){
+                arr2.push(engine.world.bodies[index1].id);
+            }
+                return arr2;
+        }
+            
 function checkStaticAllowed(idIndex){
-    if(idIndex==2) return false;
-    else if((idIndex+2) in randomArray) return false;
+    //console.log(engine.world.bodies[idIndex-2].render);
     
+    if(idIndex==2) return false;
+   
+    //else if(idIndex<2) return false;
     return true;
     
 }
 
+
 //make object disappear
             let mouseClickNumber=0;
+            const maxScore=engine.world.bodies.length;
+            const ScoreMap=[0,maxScore,0,1000];
             let allObjects=Matter.Composite.allBodies(engine.world);
             Matter.Events.on(mouseConstraint, 'mousedown', function(event) {
                 for(let elt4 of allObjects){
+                    //make objects live after some moves
                     if(mouseClickNumber==10) {
                         /* for(let elt1 of pyramid1.Bodies){
                              Matter.Body.setStatic(elt1,false);
@@ -143,10 +159,7 @@ function checkStaticAllowed(idIndex){
                              if(checkStaticAllowed(elt3.id) ) Matter.Body.setStatic(elt3,false);
                         
                              //else{console.log(elt3)};
-                             }
-                        for(let elt6 of randomArray){
-                            Matter.Body.setStatic(engine.world.bodies[elt6],true);
-                            }
+                         }
 
                         }
 
@@ -158,6 +171,7 @@ function checkStaticAllowed(idIndex){
             });
 //collision management
             let PlayerScore=0;
+           
             let collisionDectector=Matter.Detector.create();
             Matter.Detector.setBodies(collisionDectector,engine.world.bodies);
             Matter.Events.on(engine, "collisionStart", ()=>{
@@ -167,13 +181,19 @@ function checkStaticAllowed(idIndex){
                             //PlayerScore+=pairCol.depth;
                             if(pairCol.depth>25 && pairCol.bodyA.id!=2 && pairCol.bodyB.id!=2) {
                                 Matter.Composite.remove(engine.world,[pairCol.bodyA,pairCol.bodyB]);
-                                PlayerScore+=2;
+                                //PlayerScore=ScoreMap.map(maxScore-engine.world.bodies.length);
+                                //scoreDisplay.innerText=PlayerScore;
                             }
                     
 
             }});     
-                
-            
+            function startTimer() {
+                timer = setInterval(function() {
+                    PlayerScore=maxScore-engine.world.bodies.length
+                    scoreDisplay.innerText=PlayerScore;
+                }, 500);
+            }
+            startTimer();
             
 
    
