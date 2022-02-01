@@ -190,7 +190,7 @@ let scoreDisplay=document.getElementById("jjssh");
             }
        
 gameOver=false;
-TotalMoves=2;
+TotalMoves=10;
 
             
 
