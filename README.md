@@ -9,4 +9,8 @@ Destroying the red blocks lead to decrease in 8 points
 Destroying the green blocks lead to increase in 5 points
 
 Each mouse click on a block  can disappear the block  and you have to figure out how to tackle the problem so that you can maximize your score
+********************************************************************************************************************************************************************************
+
+We have build this game completely from scarch with a javascript library called Matter.js
+
 
