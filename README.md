@@ -1,6 +1,6 @@
 # fall_blocks
 this is for the DevCom IITB competition
-You have given 10 moves to destroy objects,you have to use it wisely so that after 10th move when the pyramid collapses you get maximum points 
+You have been given 10 moves to destroy blocks,you have to use it wisely so that after 10th move when the pyramid collapses you get maximum points 
 
 2 Point is counted when two blocks collides with a certain velocity and annihilate each other
 
